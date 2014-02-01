@@ -17,7 +17,6 @@ and edit your /etc/alan/alan.conf like this:
 after all, run 
 
 	sudo apt-get install python-feedparser
-	alan-config -s rss
 	alan-config -e rss
 	openbox --reconfigure
 
