@@ -1,13 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import feedparser
-import ConfigParser
-
-#rss = "http://rss.voidsec.com/?type=atom10"
-config = ConfigParser.RawConfigParser()
-config.read("/etc/alan/rss.conf")
-allfeed = map(lambda s: s.strip('\''), config.get('feed', 'rssfeed').split(','))
-
 
 import alan.core.extension as extension
 from alan.core.objects.separator import Header, Separator
@@ -18,18 +11,15 @@ from alan.core.objects.actions import ExecuteAction
 class Extension(extension.Extension):
 	
 	extensionName = "rss"
-	
-	# oneslip http://semplice-linux.org 600x800 Semplice-Linux
-	
+
 	def generate(self):
 		""" Actually generate things. """
-
+		allfeed = map(lambda s: s.strip('\''), self.extension_settings["rssfeed"].split(','))
+		
 		for rss in allfeed:
-
 			feed = feedparser.parse(rss)
 
 			for new in feed['items']:
-
 				self.add(self.return_executable_item(new['title'], new['link'], icon="applications-internet"))
 
 
